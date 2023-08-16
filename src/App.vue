@@ -2,13 +2,14 @@
   <div>
     <NavBar class="mb-5"/>
     <main class="container">
-      <div class="is-flex is-justify-content-center is-flex-direction-column">
+      <div class="is-flex is-flex-direction-column">
         <TextBoxInput
           help="Here is the place for the copied link from Office365 or MS Teams."
           label="Defender Link"
           placeholder="Insert Defender Link here."
           value=""
           class="is-flex-grow-1"
+          :autofocus="true"
           @update:value="linkChange"
         />
         <button
@@ -16,7 +17,15 @@
           :disabled="buttonDisabled"
           @click="goToClick"
         >
-          {{ buttonText }}
+          <span>{{ buttonText }}</span>
+          <span
+            v-if="!buttonDisabled"
+            class="icon is-small"
+          >
+            <FontAwesomeIcon
+              icon="fa-solid fa-up-right-from-square"
+            />
+          </span>
         </button>
       </div>
     </main>
@@ -34,7 +43,7 @@ const buttonText = computed<string>(() => {
   if (redirectUrl.value !== null) {
     return `Goto ${redirectUrl.value}`
   } else {
-    return "Insert URL first"
+    return "No defended url detected"
   }
 })
 
@@ -60,8 +69,13 @@ const goToClick = () => {
 }
 
 const dedefendUrl = (url: string): string => {
+  let originalUrl: URL;
 
-  const originalUrl: URL = getDecodedUrlFromParameter(new URL(url), "originalUrl")
+  try {
+    originalUrl = getDecodedUrlFromParameter(new URL(url), "originalUrl")
+  } catch (e) {
+    return ""
+  }
 
   if (originalUrl.host.length > 0) {
     let realUrl: URL

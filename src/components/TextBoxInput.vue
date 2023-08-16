@@ -6,6 +6,7 @@
         class="textarea is-small"
         :placeholder="props.placeholder"
         :value="value"
+        :autofocus="props.autofocus"
         @input="updateValue(($event.target as HTMLInputElement).value)"
       />
     </div>
@@ -25,7 +26,8 @@ const props = defineProps<{
   label: string,
   placeholder: string,
   value: any,
-  help: string
+  help: string,
+  autofocus: boolean
 }>()
 
 const emit = defineEmits<{

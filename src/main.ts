@@ -3,11 +3,11 @@ import './assets/main.scss'
 import App from './App.vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faShieldHalved} from "@fortawesome/free-solid-svg-icons";
+import {faShieldHalved, faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 
 const app = createApp(App)
 
-library.add(faShieldHalved)
+library.add(faShieldHalved, faUpRightFromSquare)
 app.component('FontAwesomeIcon', FontAwesomeIcon)
 
 
