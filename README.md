@@ -8,9 +8,7 @@ Those urls can be retrieved by the Office 365 Outlook or Teams.
 
 ## Features
 
-* Shortens any Link to a short-code with at least 6 characters or to a long one (length of 1024 chars).
-* Allows tracking of the link click via Plausible
-* Defender-Mode - Forwards the user to a few "Checking link" pages. "Like a defender does"
+* Unwraps Urls from the Microsoft Cloud Defender
 
 ## Use from GitHub Pages
 
