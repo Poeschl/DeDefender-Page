@@ -72,6 +72,7 @@ const dedefendUrl = (url: string): string => {
     }
 
     realUrl.searchParams.delete("McasTsid")
+    removeDefenderDomain(realUrl)
 
     return realUrl.toString()
   } else {
@@ -82,6 +83,12 @@ const dedefendUrl = (url: string): string => {
 const getDecodedUrlFromParameter = (url: URL, parameter: string, defaultValue: string = ""): URL => {
   const paramValue = url.searchParams.get(parameter) || defaultValue
   return new URL(decodeURI(paramValue))
+}
+
+const removeDefenderDomain = (url: URL) => {
+  if (url.host.endsWith("mcas.ms")) {
+    url.host = url.host.substring(0, url.host.indexOf(".mcas.ms"))
+  }
 }
 
 </script>
