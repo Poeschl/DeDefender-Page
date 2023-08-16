@@ -61,32 +61,27 @@ const goToClick = () => {
 
 const dedefendUrl = (url: string): string => {
 
-  const originalUrl = getDecodedUrlFromParameter(url, "originalUrl")
+  const originalUrl: URL = getDecodedUrlFromParameter(new URL(url), "originalUrl")
 
-  if (originalUrl.length > 0) {
-    let realUrl = ""
-    if (originalUrl.startsWith("https://eur01.safelinks.protection.outlook.com.mcas.ms")) {
+  if (originalUrl.host.length > 0) {
+    let realUrl: URL
+    if (originalUrl.host.endsWith("safelinks.protection.outlook.com.mcas.ms")) {
       realUrl = getDecodedUrlFromParameter(originalUrl, "url")
     } else {
       realUrl = originalUrl
     }
 
-    return removeQueryParameterOfUrl(realUrl, "McasTsid")
+    realUrl.searchParams.delete("McasTsid")
+
+    return realUrl.toString()
   } else {
     return url
   }
 }
 
-const getDecodedUrlFromParameter = (url: string, parameter: string, defaultValue: string = ""): string => {
-  const parsedUrl: URL = new URL(url)
-  const paramValue = parsedUrl.searchParams.get(parameter) || defaultValue
-  return decodeURI(paramValue)
-}
-
-const removeQueryParameterOfUrl = (url: string, parameter: string): string => {
-  const parsedUrl: URL = new URL(url)
-  parsedUrl.searchParams.delete(parameter)
-  return parsedUrl.toString()
+const getDecodedUrlFromParameter = (url: URL, parameter: string, defaultValue: string = ""): URL => {
+  const paramValue = url.searchParams.get(parameter) || defaultValue
+  return new URL(decodeURI(paramValue))
 }
 
 </script>
