@@ -64,21 +64,29 @@ const dedefendUrl = (url: string): string => {
   const originalUrl = getDecodedUrlFromParameter(url, "originalUrl")
 
   if (originalUrl.length > 0) {
+    let realUrl = ""
     if (originalUrl.startsWith("https://eur01.safelinks.protection.outlook.com.mcas.ms")) {
-      return getDecodedUrlFromParameter(originalUrl, "url")
+      realUrl = getDecodedUrlFromParameter(originalUrl, "url")
     } else {
-      return originalUrl
+      realUrl = originalUrl
     }
-    // clear a remaining McasTsid
+
+    return removeQueryParameterOfUrl(realUrl, "McasTsid")
   } else {
     return url
   }
 }
 
 const getDecodedUrlFromParameter = (url: string, parameter: string, defaultValue: string = ""): string => {
-  const urlParams = new URLSearchParams(url)
-  const paramValue = urlParams.get(parameter) || defaultValue
+  const parsedUrl: URL = new URL(url)
+  const paramValue = parsedUrl.searchParams.get(parameter) || defaultValue
   return decodeURI(paramValue)
+}
+
+const removeQueryParameterOfUrl = (url: string, parameter: string): string => {
+  const parsedUrl: URL = new URL(url)
+  parsedUrl.searchParams.delete(parameter)
+  return parsedUrl.toString()
 }
 
 </script>
