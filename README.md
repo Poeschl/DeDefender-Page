@@ -4,6 +4,8 @@ Just a simple webpage stored in a html file.
 It has an input box which accepts an url which is protected by Microsoft Cloud Defender and unpacks it.
 Those urls can be retrieved by the Office 365 Outlook or Teams.
 
+![The ui of DeDefender](doc/overview.png)
+
 ## Features
 
 * Shortens any Link to a short-code with at least 6 characters or to a long one (length of 1024 chars).
