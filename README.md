@@ -12,9 +12,14 @@ Those urls can be retrieved by the Office 365 Outlook or Teams.
 * Allows tracking of the link click via Plausible
 * Defender-Mode - Forwards the user to a few "Checking link" pages. "Like a defender does"
 
-## Install
+## Use from GitHub Pages
 
-1. Download the singe-file-application from [here]()
+1. Goto https://poeschl.github.io/DeDefender-Page
+2. Use it
+
+## Install locally
+
+1. Download the singe-file-application as `dedefender.html` from [here](https://github.com/Poeschl/DeDefender-Page/raw/gh-pages/index.html)
 2. Open it in your browser
 3. Use it
 
