@@ -36,6 +36,9 @@
 import NavBar from './components/NavBar.vue'
 import TextBoxInput from "@/components/TextBoxInput.vue";
 import {computed, ref} from "vue";
+import DeDefenderService from "@/service/DeDefenderService";
+
+const dedefenderService = new DeDefenderService()
 
 const redirectUrl = ref<string | null>(null)
 const buttonDisabled = computed<boolean>(() => redirectUrl.value == null)
@@ -50,7 +53,7 @@ const buttonText = computed<string>(() => {
 const linkChange = (value: string) => {
 
   if (value.startsWith("http")) {
-    const result = dedefendUrl(value)
+    const result = dedefenderService.dedefendUrl(value)
 
     if (result.length > 0) {
       redirectUrl.value = result
@@ -68,41 +71,6 @@ const goToClick = () => {
   }
 }
 
-const dedefendUrl = (url: string): string => {
-  let originalUrl: URL;
 
-  try {
-    originalUrl = getDecodedUrlFromParameter(new URL(url), "originalUrl")
-  } catch (e) {
-    return ""
-  }
-
-  if (originalUrl.host.length > 0) {
-    let realUrl: URL
-    if (originalUrl.host.endsWith("safelinks.protection.outlook.com.mcas.ms")) {
-      realUrl = getDecodedUrlFromParameter(originalUrl, "url")
-    } else {
-      realUrl = originalUrl
-    }
-
-    realUrl.searchParams.delete("McasTsid")
-    removeDefenderDomain(realUrl)
-
-    return realUrl.toString()
-  } else {
-    return url
-  }
-}
-
-const getDecodedUrlFromParameter = (url: URL, parameter: string, defaultValue: string = ""): URL => {
-  const paramValue = url.searchParams.get(parameter) || defaultValue
-  return new URL(decodeURI(paramValue))
-}
-
-const removeDefenderDomain = (url: URL) => {
-  if (url.host.endsWith("mcas.ms")) {
-    url.host = url.host.substring(0, url.host.indexOf(".mcas.ms"))
-  }
-}
 
 </script>
