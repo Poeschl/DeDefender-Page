@@ -51,7 +51,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: extension.zip
-          path: 'extension.zip'
+          path: .
 
       - name: 🔑 Sign Chrome extension
         uses: cardinalby/webext-buildtools-chrome-crx-action@v2
@@ -82,7 +82,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: extension.zip
-          path: 'extension.zip'
+          path: .
 
       - name: 🔑 Sign FireFox extension
         id: ffSignXpi
