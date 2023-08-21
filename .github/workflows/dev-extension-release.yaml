@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release:
+  chrome_extension:
     name: Build Chrome Extension
     runs-on: ubuntu-latest
     steps:
@@ -38,6 +38,61 @@ jobs:
           zipFilePath: 'extension/dist/extension.zip'
           crxFilePath: 'build/DeDefender.crx'
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
+
+      - name: 🚀 Deploy to pages branch
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          BASE_BRANCH: main
+          clean: false
+          single-commit: true
+
+  firefox_addon:
+    name: Build FireFox addon
+    runs-on: ubuntu-latest
+    steps:
+      - name: ↩️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🏗️ Install Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependency-path: 'extension/package-lock.json'
+
+      - name: 🏗️ Install packages
+        run: cd extension && npm ci
+
+      - name: ⚙️ Build extension
+        run: cd extension && TARGET=firefox npm run build
+
+      - name: 🗃️ Compress extension
+        uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+        with:
+          extensionDir: 'extension/dist'
+          zipFilePath: 'extension/dist/extension.zip'
+
+      - name: 🔑 Sign FireFox extension
+        id: ffSignXpi
+        continue-on-error: true
+        uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@v1
+        with:
+          timeoutMs: 1200000
+          extensionId: ${{ secrets.FF_OFFLINE_EXT_ID }}
+          zipFilePath: 'extension/dist/extension.zip'
+          xpiFilePath: 'build/DeDefender.xpi'
+          jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
+          jwtSecret: ${{ secrets.FF_JWT_SECRET }}
+
+      - name: 🔑 Sign error?
+        if: |
+          steps.ffSignXpi.outcome == 'failure' &&
+          steps.ffSignXpi.outputs.sameVersionAlreadyUploadedError != 'true'
+        run: exit 1
 
       - name: 🚀 Deploy to pages branch
         uses: JamesIves/github-pages-deploy-action@releases/v3
