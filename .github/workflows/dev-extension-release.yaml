@@ -1,4 +1,4 @@
-name: Publish latest release
+name: Publish extension
 on:
   workflow_dispatch:
   push:

@@ -1,4 +1,4 @@
-name: Publish latest release
+name: Publish Website
 on:
   workflow_dispatch:
   push:
