@@ -23,7 +23,8 @@ Those urls can be retrieved by the Office 365 Outlook or Teams.
 
 ## Install browser extension
 
-// Text pending
+1. Download the [Chrome extension](https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.crx) or FireFox addon.
+2. Install them in your browser (somewhere in the addons/extensions settings)
 
 ## Note
 

@@ -27,6 +27,13 @@
             />
           </span>
         </button>
+        <div class="is-flex is-justify-content-center mt-6">
+          <IconBadge
+            fa-icon-class="fa-download"
+            label="Download Chrome Extension"
+            href="https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.crx"
+          />
+        </div>
       </div>
     </main>
   </div>
@@ -37,6 +44,7 @@ import NavBar from './components/NavBar.vue'
 import TextBoxInput from "@/components/TextBoxInput.vue";
 import {computed, ref} from "vue";
 import DeDefenderService from "@/service/DeDefenderService";
+import IconBadge from "@/components/IconBadge.vue";
 
 const dedefenderService = new DeDefenderService()
 
@@ -70,7 +78,6 @@ const goToClick = () => {
     window.open(redirectUrl.value, "_blank")
   }
 }
-
 
 
 </script>
