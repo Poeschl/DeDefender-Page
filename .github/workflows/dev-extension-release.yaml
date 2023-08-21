@@ -1,0 +1,50 @@
+name: Publish latest release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Build Chrome Extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: ↩️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🏗️ Install Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependency-path: 'extension/package-lock.json'
+
+      - name: 🏗️ Install packages
+        run: cd extension && npm ci
+
+      - name: ⚙️ Build extension
+        run: cd extension && TARGET=chrome npm run build
+
+
+      - id: packExtensionDir
+        name: 🗃️ Compress extension
+        uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+        with:
+          extensionDir: 'extension/dist'
+          zipFilePath: 'extension/dist/extension.zip'
+
+      - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+        with:
+          zipFilePath: 'extension/dist/extension.zip'
+          crxFilePath: 'build/DeDefender.crx'
+          privateKey: ${{ secrets.PRIVATE_SIGNING_KEY }}
+
+      - name: 🚀 Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          BASE_BRANCH: main
