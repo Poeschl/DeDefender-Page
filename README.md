@@ -26,7 +26,8 @@ Those urls can be retrieved by the Office 365 Outlook or Teams.
 The browser extension will automatically convert any anchor starting with `https://mcas-proxyweb.mcas.ms` to the unwrapped reference on
 every `https://*.mcas.ms` web page.
 
-1. Download the [Chrome extension](https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.crx) or FireFox addon.
+1. Download the [Chrome extension](https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.crx)
+   or [FireFox addon](https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.xpi).
 2. Install them in your browser (somewhere in the addons/extensions settings)
 
 ## Note

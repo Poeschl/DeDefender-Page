@@ -3,7 +3,7 @@
     <span class="tag">{{ label }}</span>
     <span class="tag is-primary">
       <FontAwesomeIcon
-        :icon="`fa-solid ${faIconClass}`"
+        :icon="faIconClass"
       />
     </span>
   </a>

@@ -27,12 +27,21 @@
             />
           </span>
         </button>
-        <div class="is-flex is-justify-content-center mt-6">
-          <IconBadge
-            fa-icon-class="fa-download"
-            label="Download Chrome Extension"
-            href="https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.crx"
-          />
+        <div class="field is-grouped is-flex is-justify-content-center is-flex-direction-row">
+          <div class="control">
+            <IconBadge
+              fa-icon-class="fa-brands fa-chrome"
+              label="Download Chrome Extension"
+              href="https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.crx"
+            />
+          </div>
+          <div class="control">
+            <IconBadge
+              fa-icon-class="fa-brands fa-firefox"
+              label="Download FireFox Addon"
+              href="https://github.com/Poeschl/DeDefender/raw/gh-pages/DeDefender.xpi"
+            />
+          </div>
         </div>
       </div>
     </main>
@@ -78,6 +87,10 @@ const goToClick = () => {
     window.open(redirectUrl.value, "_blank")
   }
 }
-
-
 </script>
+
+<style scoped lang="scss">
+.field.is-grouped {
+  margin-top: 3rem;
+}
+</style>
