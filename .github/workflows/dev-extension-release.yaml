@@ -26,21 +26,20 @@ jobs:
       - name: ⚙️ Build extension
         run: cd extension && TARGET=chrome npm run build
 
-
-      - id: packExtensionDir
-        name: 🗃️ Compress extension
+      - name: 🗃️ Compress extension
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
           extensionDir: 'extension/dist'
           zipFilePath: 'extension/dist/extension.zip'
 
-      - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+      - name: 🔑 Sign Chrome extension
+        uses: cardinalby/webext-buildtools-chrome-crx-action@v2
         with:
           zipFilePath: 'extension/dist/extension.zip'
           crxFilePath: 'build/DeDefender.crx'
-          privateKey: ${{ secrets.PRIVATE_SIGNING_KEY }}
+          privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
-      - name: 🚀 Deploy
+      - name: 🚀 Deploy to pages branch
         uses: JamesIves/github-pages-deploy-action@releases/v3
         if: github.ref == 'refs/heads/main'
         with:
