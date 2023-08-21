@@ -12,6 +12,10 @@ export default class DeDefenderService {
       let realUrl: URL
       if (originalUrl.host.endsWith("safelinks.protection.outlook.com.mcas.ms")) {
         realUrl = this.getDecodedUrlFromParameter(originalUrl, "url")
+        originalUrl.searchParams.forEach((value, key) => {
+          if (key != "url")
+            realUrl.searchParams.set(key, value)
+        })
       } else {
         realUrl = originalUrl
       }
@@ -27,7 +31,7 @@ export default class DeDefenderService {
 
   private getDecodedUrlFromParameter = (url: URL, parameter: string, defaultValue: string = ""): URL => {
     const paramValue = url.searchParams.get(parameter) || defaultValue
-    return new URL(decodeURI(paramValue))
+    return new URL(paramValue)
   }
   private removeDefenderDomain = (url: URL) => {
     if (url.host.endsWith("mcas.ms")) {
