@@ -1,9 +1,10 @@
 export default class DeDefenderService {
   dedefendUrl = (url: string): string => {
-    let originalUrl: URL;
+    const parsedUrl = new URL(url)
 
+    let originalUrl: URL;
     try {
-      originalUrl = this.getDecodedUrlFromParameter(new URL(url), "originalUrl")
+      originalUrl = this.getDecodedUrlFromParameter(parsedUrl, "originalUrl")
     } catch (e) {
       return ""
     }
