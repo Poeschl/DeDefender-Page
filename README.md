@@ -12,12 +12,12 @@ Those urls can be retrieved by the Office 365 Outlook or Teams.
 
 ## Use page from GitHub Pages
 
-1. Goto https://poeschl.github.io/DeDefender-Page
+1. Goto https://poeschl.github.io/DeDefender
 2. Use it
 
 ## Install page locally
 
-1. Download the singe-file-application as `dedefender.html` from [here](https://github.com/Poeschl/DeDefender-Page/raw/gh-pages/index.html)
+1. Download the singe-file-application as `dedefender.html` from [here](https://github.com/Poeschl/DeDefender/raw/gh-pages/index.html)
 2. Open it in your browser
 3. Use it
 
