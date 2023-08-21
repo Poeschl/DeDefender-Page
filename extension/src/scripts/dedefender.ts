@@ -7,7 +7,7 @@ const findDefenderLinks = (): HTMLAnchorElement[] => {
   return anchorElements.filter(element => {
     if (element.href.length > 0) {
       const url = new URL(element.href)
-      return url.host.endsWith(".mcas.ms")
+      return url.host.endsWith("mcas-proxyweb.mcas.ms")
     } else {
       return false
     }
