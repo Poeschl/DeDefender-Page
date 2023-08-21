@@ -85,8 +85,6 @@ jobs:
           path: .
 
       - name: 🔑 Sign FireFox extension
-        id: ffSignXpi
-        continue-on-error: true
         uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@v1
         with:
           timeoutMs: 1200000
@@ -96,11 +94,6 @@ jobs:
           jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
           jwtSecret: ${{ secrets.FF_JWT_SECRET }}
 
-      - name: 🔑 Sign error?
-        if: |
-          steps.ffSignXpi.outcome == 'failure' &&
-          steps.ffSignXpi.outputs.sameVersionAlreadyUploadedError != 'true'
-        run: exit 1
 
       - name: 🚀 Deploy to pages branch
         uses: JamesIves/github-pages-deploy-action@releases/v3
