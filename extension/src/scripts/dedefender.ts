@@ -38,9 +38,8 @@ links.forEach(anchor => dedefendLinkNode(anchor))
 const observer = new MutationObserver(mutations => {
   mutations
     .filter(mutation => mutation.target.nodeName.toLowerCase() == "a")
-    .filter(mutation => filterForValidLinks(mutation.target))
-    .forEach(async (mutation) => {
-      const element: HTMLAnchorElement = mutation.target
+    .map(mutation => mutation.target as HTMLAnchorElement)
+    .forEach(element => {
       dedefendLinkNode(element)
       removeMSLinkListener(element)
     })
