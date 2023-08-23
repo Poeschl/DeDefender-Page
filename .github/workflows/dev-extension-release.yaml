@@ -25,19 +25,25 @@ jobs:
         run: cd extension && npm ci
 
       - name: ⚙️ Build extension
-        run: cd extension && TARGET=chrome npm run build
+        run: cd extension && TARGET=chrome npm run build --outDir ./dist/chrome && TARGET=firefox npm run build --outDir ./dist/firefox
 
-      - name: 🗃️ Compress extension
+      - name: 🗃️ Compress chrome extension
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
-          extensionDir: 'extension/dist'
-          zipFilePath: 'extension/dist/extension.zip'
+          extensionDir: 'extension/dist/chrome'
+          zipFilePath: 'extension/dist/extension-chrome.zip'
 
-      - name: 📤 Upload extension.zip
+      - name: 🗃️ Compress firefox extension
+        uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+        with:
+          extensionDir: 'extension/dist/firefox'
+          zipFilePath: 'extension/dist/extension-firefox.zip'
+
+      - name: 📤 Upload extension.zip's
         uses: actions/upload-artifact@v3
         with:
           name: extension.zip
-          path: 'extension/dist/extension.zip'
+          path: 'extension/dist/extension-*.zip'
           retention-days: 33
 
   chrome_extension:
@@ -56,7 +62,7 @@ jobs:
       - name: 🔑 Sign Chrome extension
         uses: cardinalby/webext-buildtools-chrome-crx-action@v2
         with:
-          zipFilePath: 'extension.zip'
+          zipFilePath: 'extension-chrome.zip'
           crxFilePath: 'build/DeDefender.crx'
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
@@ -89,7 +95,7 @@ jobs:
         with:
           timeoutMs: 1200000
           extensionId: ${{ secrets.FF_OFFLINE_EXT_ID }}
-          zipFilePath: 'extension.zip'
+          zipFilePath: 'extension-firefox.zip'
           xpiFilePath: 'build/DeDefender.xpi'
           jwtIssuer: ${{ secrets.FF_JWT_ISSUER }}
           jwtSecret: ${{ secrets.FF_JWT_SECRET }}
