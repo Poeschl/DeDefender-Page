@@ -18,5 +18,11 @@
         "src/scripts/dedefender.ts"
       ]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "src/view/index.html"
+  },
+  "background": {
+    "service_worker": "src/scripts/service-worker.ts"
+  }
 }

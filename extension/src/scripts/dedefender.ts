@@ -1,6 +1,12 @@
 import DeDefenderService from "../../../src/service/DeDefenderService";
+import browser from "webextension-polyfill";
+import {Message} from "../models/Message";
 
 const dedefenderService = new DeDefenderService()
+
+const sendLinkToServiceWorker = (anchor: HTMLAnchorElement) => {
+  browser.runtime.sendMessage({type: "storeData", data: anchor.href} as Message)
+}
 
 const getPageRootBody = (): HTMLElement => {
   //check for electron container
@@ -52,6 +58,7 @@ const removeMSLinkListener = (linkElement: HTMLAnchorElement) => {
 const handleAnchor = (anchor: HTMLAnchorElement) => {
   dedefendLinkNode(anchor)
   removeMSLinkListener(anchor)
+  sendLinkToServiceWorker(anchor)
 }
 
 const anchorObserverFunction = (mutations: MutationRecord[]) => {
