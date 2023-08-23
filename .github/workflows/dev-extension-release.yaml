@@ -25,7 +25,7 @@ jobs:
         run: cd extension && npm ci
 
       - name: ⚙️ Build extension
-        run: cd extension && TARGET=chrome npm run build --outDir ./dist/chrome && TARGET=firefox npm run build --outDir ./dist/firefox
+        run: cd extension && npm run build:chrome && npm run build:firefox
 
       - name: 🗃️ Compress chrome extension
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
