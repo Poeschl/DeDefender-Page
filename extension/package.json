@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "build:chrome": "vue-tsc && TARGET=chrome vite build --outDir dist/chrome",
-    "build:firefox": "vue-tsc && TARGET=firefox vite build --outDir dist/firefox"
+    "build:chrome": "vue-tsc --outDir dist/chrome && TARGET=chrome vite build",
+    "build:firefox": "vue-tsc --outDir dist/firefox && TARGET=firefox vite build"
   },
   "dependencies": {
     "vue": "^3.3.4"
