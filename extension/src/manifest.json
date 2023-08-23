@@ -10,7 +10,9 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.mcas.ms/*"
+        "https://outlook.office.com.mcas.ms/*",
+        "https://teams.microsoft.com.mcas.ms/*",
+        "file:///*"
       ],
       "js": [
         "src/scripts/dedefender.ts"

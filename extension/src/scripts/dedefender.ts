@@ -28,20 +28,31 @@ const dedefendLinkNode = (linkElement: HTMLAnchorElement) => {
 
 const removeMSLinkListener = (linkElement: HTMLAnchorElement) => {
   // replace element with a clone to discard click handlers
-  const anchorClone = linkElement.cloneNode(true)
+  const anchorClone = linkElement.cloneNode(true) as HTMLAnchorElement
+  anchorClone.setAttribute("dedefended", "true")
   linkElement.replaceWith(anchorClone)
 }
 
+const handleAnchor = (anchor: HTMLAnchorElement) => {
+  dedefendLinkNode(anchor)
+  removeMSLinkListener(anchor)
+}
+
 const links = findDefenderLinks()
-links.forEach(anchor => dedefendLinkNode(anchor))
+links.forEach(anchor => handleAnchor(anchor))
 
 const observer = new MutationObserver(mutations => {
   mutations
-    .filter(mutation => mutation.target.nodeName.toLowerCase() == "a")
-    .map(mutation => mutation.target as HTMLAnchorElement)
-    .forEach(element => {
-      dedefendLinkNode(element)
-      removeMSLinkListener(element)
+    .flatMap<Node>(mutation => {
+      if (mutation.type == "childList") {
+        return Array.from(mutation.addedNodes).filter(element => element.nodeName.toLowerCase() == "a")
+      } else if (mutation.type == "attributes" && mutation.target.nodeName.toLowerCase() == "a") {
+        return [mutation.target]
+      }
+      return []
     })
+    .map(mutation => mutation as HTMLAnchorElement)
+    .filter(anchor => anchor.getAttribute("dedefended") !== "true")
+    .forEach(element => handleAnchor(element))
 })
-observer.observe(window.document.body, {attributes: true, childList: true, subtree: true})
+observer.observe(window.document.body, {childList: true, subtree: true})
