@@ -4,7 +4,15 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      GH actions:
+        dependency-type: "production"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      npm:
+        dependency-type: "production"
+      npm dev:
+        dependency-type: "development"
